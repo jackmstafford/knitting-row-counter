@@ -1,118 +1,181 @@
 <!HTML>
 <html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui">
-    <meta property="og:image" content="http://gschoppe.com/projects/knitting-row-counter/screenshot.png"/>
-    <meta property="og:url" content="http://gschoppe.com/projects/knitting-row-counter/"/>
-    <meta property="og:title" content="Online Knitting Row Counter"/>
-    <meta name="description" property="og:description" content="a responsive knitting row counter compatible with USB and Bluetooth foot pedals." />
-    <meta property="og:site_name" content="gschoppe.com"/>
-    <meta property="og:type" content="webapp"/>
-    
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui"
+    />
+    <meta
+      property="og:image"
+      content="http://gschoppe.com/projects/knitting-row-counter/screenshot.png"
+    />
+    <meta property="og:url" content="http://gschoppe.com/projects/knitting-row-counter/" />
+    <meta property="og:title" content="Online Knitting Row Counter" />
+    <meta
+      name="description"
+      property="og:description"
+      content="a responsive knitting row counter compatible with USB and Bluetooth foot pedals."
+    />
+    <meta property="og:site_name" content="gschoppe.com" />
+    <meta property="og:type" content="webapp" />
+
     <title>Knitting Row Counter</title>
-    <link rel="stylesheet" type="text/css" href="styles/layout.css"/>
-    <link rel="stylesheet" type="text/css" href="styles/theme-dark.css" id="theme"/>
+    <link rel="stylesheet" type="text/css" href="styles/layout.css" />
+    <link rel="stylesheet" type="text/css" href="styles/theme-dark.css" id="theme" />
     <script type="text/javascript">
-        var defaultKeyCode = "space";
+      var defaultKeyCode = 'space';
     </script>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
+    ></script>
     <script type="text/javascript" src="scripts/jquery-cookie.js"></script>
     <script type="text/javascript" src="scripts/rowcounter.js"></script>
-</head>
-<body>
-    <div id="forkongithub"><a href="https://github.com/gschoppe/knitting-row-counter">Fork me on GitHub</a></div>
+  </head>
+  <body>
+    <div id="forkongithub">
+      <a href="https://github.com/gschoppe/knitting-row-counter">Fork me on GitHub</a>
+    </div>
     <div class="wrap" id="header">
-        <!-- Go to www.addthis.com/dashboard to customize your tools -->
-        <div class="addthis_sharing_toolbox"></div>
-        <h1>Knitting Row Counter</h1>
-        <i>by Greg Schoppe (<a href="http://gschoppe.com">gschoppe.com</a>)</i><br/>
-        <a href="pedals.html">See Compatible Foot Pedals &raquo;</a>
+      <!-- Go to www.addthis.com/dashboard to customize your tools -->
+      <div class="addthis_sharing_toolbox"></div>
+      <h1>Knitting Row Counter</h1>
+      <i>by Greg Schoppe (<a href="http://gschoppe.com">gschoppe.com</a>)</i><br />
+      <a href="pedals.html">See Compatible Foot Pedals &raquo;</a>
     </div>
     <div class="wrap">
-        <ul class="tabs">
-            <li><a href="" id="goto-projects" class="active">Projects</a></li><li><a href="" id="goto-settings">App Settings</a></li>
-        </ul>
-        <div class="tab" id="tab-projects">
-            <div id="initial">
-                <h2>Projects:</h2>
-                <div id="projectsWrap">
-                    <table id="projects">
-                        
-                    </table>
-                </div>
-                <input type="button" id="newProject" value="New Project" class="primary"/>
-            </div>
-            <div id="project-settings">
-                <h2>Project Settings</h2>
-                <label for="projectName">Project Name: </label>
-                <input type="text" name="projectName" id="projectName" value=""/><br/>
-                <label for="projectRow">Rows Already Completed: </label>
-                <input type="number" name="projectRow" id="projectRow" value="0"/><br/>
-                <label for="projectGoal">Total Rows Needed: </label>
-                <input type="number" name="projectGoal" id="projectGoal" value="1"/><br/>
-                <div id="projectAdvSettingsGrabber">Does the project contain a repeated pattern?</div>
-                <div id="projectAdvSettings">
-                    <label for="projectFreq">Pattern repeats every X rows: </label>
-                    <input type="number" name="projectFreq" id="projectFreq" value="0"/><br/>
-                    <i>(enter 0 to not track repeats)</i>
-                    <label for="projectFreqStart">Pattern starts on row: </label>
-                    <input type="number" name="projectFreqStart" id="projectFreqStart" value="0"/><br/>
-                </div>
-                <br/>
-                <input type="button" name="startProject"  id="startProject"  value="Start Counting"  class="primary"  />
-                <input type="button" name="cancelChanges" id="cancelChanges" value="Cancel Changes"  class="secondary"/><!--
-             --><input type="button" name="switchProject" id="switchProject" value="Change Projects" class="secondary"/>
-            </div>
-            <div id="project-run">
-                <input type="hidden" id="projectID"/>
-                <h2 id="projectHeader"></h2>
-                <label for="rowCount">Completed Rows:</label>
-                <input type="number" name="rowCount" id="rowCount" value='0' disabled='1'/>
-                <div id="freqPips"></div>
-                of <span id="goalNum">0</span> Total Rows (<span id="goalPercent">0</span>% Done)<br/>
-                last row completed: <span id="lastRow" data-value="0">never</span>
-                <br/><br/>
-                <input type="button" name="addRow" id="addRow" value="Finished a Row" class="primary"/>
-                <input type="button" name="changeProjectSettings" id="changeProjectSettings" value="Change Settings" class="secondary"/><!--
-             --><input type="button" name="switchProject" id="switchProject2" value="Switch Projects" class="secondary"/>
-            </div>
+      <ul class="tabs">
+        <li><a href="" id="goto-projects" class="active">Projects</a></li>
+        <li><a href="" id="goto-settings">App Settings</a></li>
+      </ul>
+      <div class="tab" id="tab-projects">
+        <div id="initial">
+          <h2>Projects:</h2>
+          <div id="projectsWrap">
+            <table id="projects"></table>
+          </div>
+          <input type="button" id="newProject" value="New Project" class="primary" />
         </div>
-        <div class="tab" id="tab-settings">
-            <label for="theme">Theme: </label>
-            <div class="themeswitch">
-                <input type="checkbox" name="themeswitch" class="themeswitch-checkbox" id="themeswitch" checked>
-                <label class="themeswitch-label" for="themeswitch">
-                    <span class="themeswitch-inner"></span>
-                    <span class="themeswitch-switch"></span>
-                </label>
-            </div>
-            <label for="keyCode">Add Row on Keypress: </label>
-            <select name="keyCode" id="keyCode"></select>
+        <div id="project-settings">
+          <h2>Project Settings</h2>
+          <label for="projectName">Project Name: </label>
+          <input type="text" name="projectName" id="projectName" value="" /><br />
+          <label for="projectRow">Rows Already Completed: </label>
+          <input type="number" name="projectRow" id="projectRow" value="0" /><br />
+          <label for="projectGoal">Total Rows Needed: </label>
+          <input type="number" name="projectGoal" id="projectGoal" value="1" /><br />
+          <div id="projectAdvSettingsGrabber">Does the project contain a repeated pattern?</div>
+          <div id="projectAdvSettings">
+            <label for="projectFreq">Pattern repeats every X rows: </label>
+            <input type="number" name="projectFreq" id="projectFreq" value="0" /><br />
+            <i>(enter 0 to not track repeats)</i>
+            <label for="projectFreqStart">Pattern starts on row: </label>
+            <input type="number" name="projectFreqStart" id="projectFreqStart" value="0" /><br />
+          </div>
+          <br />
+          <input
+            type="button"
+            name="startProject"
+            id="startProject"
+            value="Start Counting"
+            class="primary"
+          />
+          <input
+            type="button"
+            name="cancelChanges"
+            id="cancelChanges"
+            value="Cancel Changes"
+            class="secondary"
+          /><!--
+             --><input
+            type="button"
+            name="switchProject"
+            id="switchProject"
+            value="Change Projects"
+            class="secondary"
+          />
         </div>
+        <div id="project-run">
+          <input type="hidden" id="projectID" />
+          <h2 id="projectHeader"></h2>
+          <label for="rowCount">Completed Rows:</label>
+          <input type="number" name="rowCount" id="rowCount" value="0" disabled="1" />
+          <div id="freqPips"></div>
+          of <span id="goalNum">0</span> Total Rows (<span id="goalPercent">0</span>% Done)<br />
+          last row completed: <span id="lastRow" data-value="0">never</span> <br /><br />
+          <input type="button" name="addRow" id="addRow" value="Finished a Row" class="primary" />
+          <input
+            type="button"
+            name="changeProjectSettings"
+            id="changeProjectSettings"
+            value="Change Settings"
+            class="secondary"
+          /><!--
+             --><input
+            type="button"
+            name="switchProject"
+            id="switchProject2"
+            value="Switch Projects"
+            class="secondary"
+          />
+        </div>
+      </div>
+      <div class="tab" id="tab-settings">
+        <label for="theme">Theme: </label>
+        <div class="themeswitch">
+          <input
+            type="checkbox"
+            name="themeswitch"
+            class="themeswitch-checkbox"
+            id="themeswitch"
+            checked
+          />
+          <label class="themeswitch-label" for="themeswitch">
+            <span class="themeswitch-inner"></span>
+            <span class="themeswitch-switch"></span>
+          </label>
+        </div>
+        <label for="keyCode">Add Row on Keypress: </label>
+        <select name="keyCode" id="keyCode"></select>
+      </div>
     </div>
     <div class="wrap" id="ad-block">
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- knitting-row-counter -->
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:336px;height:280px"
-             data-ad-client="ca-pub-7854209247901003"
-             data-ad-slot="4778040852"></ins>
-        <script>
+      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      <!-- knitting-row-counter -->
+      <ins
+        class="adsbygoogle"
+        style="display: inline-block; width: 336px; height: 280px"
+        data-ad-client="ca-pub-7854209247901003"
+        data-ad-slot="4778040852"
+      ></ins>
+      <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-        <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      </script>
+      <script>
+        (function (i, s, o, g, r, a, m) {
+          i['GoogleAnalyticsObject'] = r;
+          (i[r] =
+            i[r] ||
+            function () {
+              (i[r].q = i[r].q || []).push(arguments);
+            }),
+            (i[r].l = 1 * new Date());
+          (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+          a.async = 1;
+          a.src = g;
+          m.parentNode.insertBefore(a, m);
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-          ga('create', 'UA-38751106-1', 'auto');
-          ga('require', 'displayfeatures');
-          ga('send', 'pageview');
-
-        </script>
-        <!-- Go to www.addthis.com/dashboard to customize your tools -->
-        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-512a98654ff68c94" async></script>
+        ga('create', 'UA-38751106-1', 'auto');
+        ga('require', 'displayfeatures');
+        ga('send', 'pageview');
+      </script>
+      <!-- Go to www.addthis.com/dashboard to customize your tools -->
+      <script
+        type="text/javascript"
+        src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-512a98654ff68c94"
+        async
+      ></script>
     </div>
-</body>
+  </body>
 </html>

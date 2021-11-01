@@ -1,252 +1,294 @@
-* {box-sizing: border-box}
+* {
+  box-sizing: border-box;
+}
 
 body {
-    text-align: center;
-    font-family: helvetica, arial, sans-serif;
+  text-align: center;
+  font-family: helvetica, arial, sans-serif;
 }
 .wrap {
-    margin: 0 auto;
-    width: 100%;
-    max-width: 650px;
-    text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 650px;
+  text-align: center;
 }
-input, select {
-    display: inline-block;
-    padding: 5px;
+input,
+select {
+  display: inline-block;
+  padding: 5px;
 }
-input[type=button] {
-    padding: 10px 5px;
+input[type='button'] {
+  padding: 10px 5px;
 }
-input[type=button].primary {
-    display: inline-block;
-    width: 100%;
-    padding: 20px 5px;
+input[type='button'].primary {
+  display: inline-block;
+  width: 100%;
+  padding: 20px 5px;
 }
-input[type=button].secondary {
-    display: inline-block;
-    width: 50%;
+input[type='button'].secondary {
+  display: inline-block;
+  width: 50%;
 }
 #header {
-    margin: 10px auto 20px auto;
+  margin: 10px auto 20px auto;
 }
 #header h1 {
-    margin: 0;
-    padding:0;
+  margin: 0;
+  padding: 0;
 }
 table#projects {
-    border-collapse:collapse;
-    width: 100%;
+  border-collapse: collapse;
+  width: 100%;
 }
 table#projects tr td {
-    border-bottom: 1px solid #CCC;
+  border-bottom: 1px solid #ccc;
 }
 label {
-    display: block;
-    margin-top: 5px;
+  display: block;
+  margin-top: 5px;
 }
 #rowCount {
-    display: block;
-    width: 100%;
-    height: 100px;
-    padding: 0;
-    text-align: center;
-    font-size: 90px;
-    font-weight: bold;
-    border: none;
+  display: block;
+  width: 100%;
+  height: 100px;
+  padding: 0;
+  text-align: center;
+  font-size: 90px;
+  font-weight: bold;
+  border: none;
 }
-#rowCount::-webkit-inner-spin-button, 
-#rowCount::-webkit-outer-spin-button { 
-    -webkit-appearance: none;
-    margin: 0;
+#rowCount::-webkit-inner-spin-button,
+#rowCount::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 #freqPips span {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    margin: 0 5px 5px 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px 5px 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
-#project-settings, #runDiv, #cancel {
-    display: none;
+#project-settings,
+#runDiv,
+#cancel {
+  display: none;
 }
 .tabs {
-    list-style: none;
-    display: block;
-    text-align: left;
-    margin:0;
-    padding:0;
+  list-style: none;
+  display: block;
+  text-align: left;
+  margin: 0;
+  padding: 0;
 }
 .tabs li {
-    display: inline;
+  display: inline;
 }
 .tabs li a {
-    position: relative;
-    display: inline-block;
-    padding: 5px;
-    margin-bottom: -1px;
-    border: 1px solid #ccc;
-    border-radius: 5px 5px 0 0;
-    background-color: #000;
+  position: relative;
+  display: inline-block;
+  padding: 5px;
+  margin-bottom: -1px;
+  border: 1px solid #ccc;
+  border-radius: 5px 5px 0 0;
+  background-color: #000;
 }
 .tabs li a.active {
-    border-bottom-color: #000;
+  border-bottom-color: #000;
 }
 .tab {
-    display: none;
-    border: 1px solid #ccc;
-    padding: 5px;
+  display: none;
+  border: 1px solid #ccc;
+  padding: 5px;
 }
 .tab.active {
-    display: block;
+  display: block;
 }
 
 #projectsWrap {
-    display: inline-block;
-    border: 1px solid #ccc;
-    height: 200px;
-    overflow-y: scroll;
-    margin-bottom: 10px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  height: 200px;
+  overflow-y: scroll;
+  margin-bottom: 10px;
 }
 #projects {
-    margin: 0 auto;
+  margin: 0 auto;
 }
-#projects tr td a, #projects tr td span {
-    display: inline-block;
-    padding: 10px;
+#projects tr td a,
+#projects tr td span {
+  display: inline-block;
+  padding: 10px;
 }
 #projects tr td a {
-    font-weight: bold;
-    text-decoration: none;
+  font-weight: bold;
+  text-decoration: none;
 }
 #projects tr td:first-child {
-    width: 200px;
+  width: 200px;
 }
 
 #projectAdvSettingsGrabber {
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    padding: 5px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  padding: 5px;
 }
 #projectAdvSettings {
-    border: 1px solid #ccc;
-    padding: 5px;
+  border: 1px solid #ccc;
+  padding: 5px;
 }
 
-#pedalsDiv p, #pedalsDiv ul {
-    text-align: left;
+#pedalsDiv p,
+#pedalsDiv ul {
+  text-align: left;
 }
 #ad-block {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
-#forkongithub, #forkongithub * {box-sizing: content-box;}
+#forkongithub,
+#forkongithub * {
+  box-sizing: content-box;
+}
 
-#forkongithub a{
+#forkongithub a {
+  display: block;
+  background: #f82;
+  color: #fff;
+  text-decoration: none;
+  font-family: arial, sans-serif;
+  text-align: center;
+  font-weight: bold;
+  padding: 3px 40px;
+  font-size: 0.8rem;
+  line-height: 1.6rem;
+  position: relative;
+  transition: 0.5s;
+}
+#forkongithub a:hover {
+  background: #f50;
+  color: #fff;
+}
+#forkongithub a::before,
+#forkongithub a::after {
+  content: '';
+  width: 100%;
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 0;
+  height: 1px;
+  background: #fff;
+}
+#forkongithub a::after {
+  bottom: 1px;
+  top: auto;
+}
+@media screen and (min-width: 600px) {
+  #forkongithub {
+    position: fixed;
     display: block;
-    background:#F82;
-    color:#fff;
-    text-decoration:none;
-    font-family:arial,sans-serif;
-    text-align:center;
-    font-weight:bold;
-    padding:3px 40px;
-    font-size:.8rem;
-    line-height:1.6rem;
-    position:relative;
-    transition:0.5s;
-}
-#forkongithub a:hover{
-    background:#F50;
-    color:#fff;
-}
-#forkongithub a::before,#forkongithub a::after{
-    content:"";
-    width:100%;
-    display:block;
-    position:absolute;
-    top:1px;
-    left:0;
-    height:1px;
-    background:#fff;
-}
-#forkongithub a::after{
-    bottom:1px;
-    top:auto;
-}
-@media screen and (min-width:600px){
-    #forkongithub{
-        position:fixed;
-        display:block;
-        top:0;
-        right:0;
-        width:200px;
-        overflow:hidden;
-        height:200px;
-        z-index:9999;
-    }
-    #forkongithub a{
-        display: inline;
-        width:200px;
-        position:absolute;
-        top:60px;
-        right:-60px;
-        transform:rotate(45deg);
-        -webkit-transform:rotate(45deg);
-        -ms-transform:rotate(45deg);
-        -moz-transform:rotate(45deg);
-        -o-transform:rotate(45deg);
-        box-shadow:2px 2px 5px rgba(0,0,0,0.3);
-    }
+    top: 0;
+    right: 0;
+    width: 200px;
+    overflow: hidden;
+    height: 200px;
+    z-index: 9999;
+  }
+  #forkongithub a {
+    display: inline;
+    width: 200px;
+    position: absolute;
+    top: 60px;
+    right: -60px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  }
 }
 
 .themeswitch {
-    position: relative; width: 90px;
-    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
-    text-align: left;
-    margin: 10px auto;
+  position: relative;
+  width: 90px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  text-align: left;
+  margin: 10px auto;
 }
 .themeswitch-checkbox {
-    display: none;
+  display: none;
 }
 .themeswitch-label {
-    display: block; overflow: hidden; cursor: pointer;
-    border: 2px solid #999999; border-radius: 20px;
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid #999999;
+  border-radius: 20px;
 }
 .themeswitch-inner {
-    display: block; width: 200%; margin-left: -100%;
-    -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
-    -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+  display: block;
+  width: 200%;
+  margin-left: -100%;
+  -moz-transition: margin 0.3s ease-in 0s;
+  -webkit-transition: margin 0.3s ease-in 0s;
+  -o-transition: margin 0.3s ease-in 0s;
+  transition: margin 0.3s ease-in 0s;
 }
-.themeswitch-inner:before, .themeswitch-inner:after {
-    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
-    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
-    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+.themeswitch-inner:before,
+.themeswitch-inner:after {
+  display: block;
+  float: left;
+  width: 50%;
+  height: 30px;
+  padding: 0;
+  line-height: 30px;
+  font-size: 14px;
+  color: white;
+  font-family: Trebuchet, Arial, sans-serif;
+  font-weight: bold;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 .themeswitch-inner:before {
-    content: "DARK";
-    padding-left: 10px;
-    background-color: #424242; color: #FFFFFF;
+  content: 'DARK';
+  padding-left: 10px;
+  background-color: #424242;
+  color: #ffffff;
 }
 .themeswitch-inner:after {
-    content: "LIGHT";
-    padding-right: 10px;
-    background-color: #EEEEEE; color: #999999;
-    text-align: right;
+  content: 'LIGHT';
+  padding-right: 10px;
+  background-color: #eeeeee;
+  color: #999999;
+  text-align: right;
 }
 .themeswitch-switch {
-    display: block; width: 14px; margin: 8px;
-    background: #FFFFFF;
-    border: 2px solid #999999; border-radius: 20px;
-    position: absolute; top: 0; bottom: 0; right: 56px;
-    -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
-    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+  display: block;
+  width: 14px;
+  margin: 8px;
+  background: #ffffff;
+  border: 2px solid #999999;
+  border-radius: 20px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 56px;
+  -moz-transition: all 0.3s ease-in 0s;
+  -webkit-transition: all 0.3s ease-in 0s;
+  -o-transition: all 0.3s ease-in 0s;
+  transition: all 0.3s ease-in 0s;
 }
 .themeswitch-checkbox:checked + .themeswitch-label .themeswitch-inner {
-    margin-left: 0;
+  margin-left: 0;
 }
 .themeswitch-checkbox:checked + .themeswitch-label .themeswitch-switch {
-    right: 0px; 
+  right: 0px;
 }
