@@ -1,4 +1,4 @@
-var keyMap = {
+const keyMap = {
   backspace: 8,
   tab: 9,
   enter: 13,
@@ -99,7 +99,10 @@ var keyMap = {
   rbracket: 221,
   apostrophe: 222,
 };
-var userDataTemplate = {
+
+const defaultKeyCode = 'space';
+
+const userDataTemplate = {
   profile: {
     id: '',
     currentProject: false,
@@ -111,7 +114,7 @@ var userDataTemplate = {
   projects: {},
 };
 
-var newProjectTemplate = {
+const newProjectTemplate = {
   name: 'New Project',
   row: 0,
   goal: 100,
@@ -120,7 +123,7 @@ var newProjectTemplate = {
   prevRowTime: 0,
 };
 
-var userData;
+let userData;
 
 $(document).ready(function () {
   initializeUserData();
@@ -131,9 +134,9 @@ $(document).ready(function () {
 
   $('.tabs li a').click(function (e) {
     e.preventDefault();
-    var id = $(this).attr('id');
-    var idParts = id.split('-');
-    var tab = '#tab-' + idParts[1];
+    const id = $(this).attr('id');
+    const idParts = id.split('-');
+    const tab = `#tab-${idParts[1]}`;
     $('.tab').hide();
     $(tab).show();
     $('.tabs li a').removeClass('active');
@@ -145,7 +148,7 @@ $(document).ready(function () {
   });
   $('#projects').on('click', 'td a', function (e) {
     e.preventDefault();
-    var projectID = $(this).parents('tr').first().data('project');
+    const projectID = $(this).parents('tr').first().data('project');
     if ($(this).hasClass('openProject')) {
       $('#cancelChanges').hide();
       openProject(projectID);
@@ -165,7 +168,7 @@ $(document).ready(function () {
     runProject();
   });
   $('#changeProjectSettings').click(function () {
-    var projectID = parseInt($('#projectID').val());
+    const projectID = parseInt($('#projectID').val());
     openProject(projectID);
   });
   $('#switchProject, #switchProject2').click(function () {
@@ -188,9 +191,9 @@ function saveUserData() {
 }
 
 function doUpgrade() {
-  var settings = $.cookie('knitting-settings');
+  const settings = $.cookie('knitting-settings');
   if (typeof settings != 'undefined' && settings) {
-    var time = new Date().getTime();
+    const time = new Date().getTime();
     userData.projects[time] = {
       name: 'Current Project',
       row: settings.count,
@@ -204,20 +207,20 @@ function doUpgrade() {
 }
 
 function setTheme() {
-  theme = userData.settings.theme;
-  if (typeof theme != 'undefined' && theme == 'light') {
+  const theme = userData.settings.theme;
+  if (typeof theme != 'undefined' && theme === 'light') {
     $('#themeswitch').attr('checked', false);
     $('#theme').attr('href', 'styles/theme-light.css');
   }
   $('#themeswitch').change(function () {
-    var theme;
+    let theme;
     if ($(this).is(':checked')) {
       theme = 'dark';
     } else {
       theme = 'light';
     }
     setTimeout(function () {
-      $('#theme').attr('href', 'styles/theme-' + theme + '.css');
+      $('#theme').attr('href', `styles/theme-${theme}.css`);
     }, 300);
     userData.settings.theme = theme;
     saveUserData();
@@ -225,17 +228,17 @@ function setTheme() {
 }
 
 function setKey() {
-  key = userData.settings.key;
+  const key = userData.settings.key;
   $('#keyCode').html('');
   $.each(keyMap, function (name, code) {
-    var $element = $('<option></option>').attr('value', code).text(name);
-    if (code == key) {
+    const $element = $('<option></option>').attr('value', code).text(name);
+    if (code === key) {
       $element.attr('selected', 1);
     }
     $('#keyCode').append($element);
   });
-  $('#keyCode').change(function () {
-    userData.settings.key = intVal($(this).val());
+  $('#keyCode').on('change', function () {
+    userData.settings.key = Number($(this).val());
     saveUserData();
   });
 }
@@ -243,24 +246,22 @@ function setKey() {
 function showProjectsPage() {
   stopListening();
   $('#projects').html('');
-  var i = 0;
-  for (var projectID in userData.projects) {
-    if (userData.projects.hasOwnProperty(projectID)) {
-      var project = userData.projects[projectID];
-      var projectEntry = $('<tr></tr>').data('project', projectID);
-      if (i % 2 == 1) {
+  let i = 0;
+  for (const projectID in userData.projects) {
+    if (!(projectID in userData.projects)) {
+      const project = userData.projects[projectID];
+      const projectEntry = $('<tr></tr>').data('project', projectID);
+      if (i % 2 === 1) {
         projectEntry.addClass('odd');
       }
-      var percent = '';
-      if (project.goal > 0) percent = Math.floor((project.row / project.goal) * 100) + '%';
-      var projectName = $('<td></td>').html(
-        "<a href='' class='openProject'>" + project.name + '</a>'
-      );
-      var projectPercent = $('<td></td>').html('<span>' + percent + '</span>');
-      var projectStart = $('<td></td>').html(
-        '<span>' + formatTimestamp(projectID, true) + '</span>'
-      );
-      var projectDelete = $('<td></td>').html(
+      let percent = '';
+      if (project.goal > 0) {
+        percent = `${Math.floor((project.row / project.goal) * 100)}%`;
+      }
+      const projectName = $('<td></td>').html(`<a href='' class='openProject'>${project.name}</a>`);
+      const projectPercent = $('<td></td>').html(`<span>${percent}</span>`);
+      const projectStart = $('<td></td>').html(`<span>${formatTimestamp(projectID, true)}</span>`);
+      const projectDelete = $('<td></td>').html(
         "<a href='' class='deleteProject' title='Delete'>&times;</a>"
       );
       projectEntry
@@ -278,11 +279,17 @@ function showProjectsPage() {
 }
 
 function formatTimestamp(timestamp, dateOnly) {
-  if (typeof timestamp == 'undefined' || timestamp == 0) return 'never';
-  if (typeof dateOnly == 'undefined') dateOnly = false;
-  if (typeof timestamp == 'string' || timestamp instanceof String) timestamp = parseInt(timestamp);
-  var dateObj = new Date(timestamp);
-  var d = {
+  if (typeof timestamp == 'undefined' || timestamp === 0) {
+    return 'never';
+  }
+  if (typeof dateOnly == 'undefined') {
+    dateOnly = false;
+  }
+  if (typeof timestamp == 'string' || timestamp instanceof String) {
+    timestamp = parseInt(timestamp);
+  }
+  const dateObj = new Date(timestamp);
+  const d = {
     year: pad(dateObj.getFullYear().toString().substr(2, 2), 2),
     month: pad(dateObj.getMonth() + 1, 2),
     day: pad(dateObj.getDate(), 2),
@@ -292,21 +299,21 @@ function formatTimestamp(timestamp, dateOnly) {
   };
   if (dateOnly) {
     // american format: dd/mm/yyyy
-    return d.month + '/' + d.day + '/' + d.year;
+    return `${d.month}/${d.day}/${d.year}`;
   } else {
     // american format: hh:mm:ss dd/mm/yyyy
-    return d.hour + ':' + d.minute + ':' + d.second + ' ' + d.month + '/' + d.day + '/' + d.year;
+    return `${d.hour}:${d.minute}:${d.second} ${d.month}/${d.day}/${d.year}`;
   }
 }
 
 function pad(n, width, z) {
   z = z || '0';
-  n = n + '';
+  n = `${n}`;
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
 
 function createProject() {
-  var projectID = new Date().getTime();
+  const projectID = new Date().getTime();
   userData.projects[projectID] = newProjectTemplate;
   saveUserData();
   $('#cancelChanges').hide();
@@ -315,8 +322,10 @@ function createProject() {
 
 function openProject(projectID) {
   stopListening();
-  if (!userData.projects.hasOwnProperty(projectID)) return false;
-  var project = userData.projects[projectID];
+  if (!(projectID in userData.projects)) {
+    return false;
+  }
+  const project = userData.projects[projectID];
   $('#projectID').val(projectID);
   $('#projectName').val(project.name);
   $('#projectRow').val(project.row);
@@ -335,12 +344,16 @@ function openProject(projectID) {
 }
 
 function deleteProject(projectID) {
-  if (!userData.projects.hasOwnProperty(projectID)) return false;
-  var projectName = userData.projects[projectID].name;
-  var doDelete = confirm('are you sure you want to delete the project ' + projectName + '?');
-  if (!doDelete) return false;
+  if (!(projectID in userData.projects)) {
+    return false;
+  }
+  const projectName = userData.projects[projectID].name;
+  const doDelete = confirm(`are you sure you want to delete the project ${projectName}?`);
+  if (!doDelete) {
+    return false;
+  }
   $('#projects tr').each(function () {
-    if ($(this).data('project') == projectID) {
+    if ($(this).data('project') === projectID) {
       $(this).remove();
       return false;
     }
@@ -350,8 +363,8 @@ function deleteProject(projectID) {
 }
 
 function storeProjectSettings() {
-  var projectID = parseInt($('#projectID').val());
-  var projectSettings = {
+  const projectID = parseInt($('#projectID').val());
+  const projectSettings = {
     name: $('#projectName').val(),
     row: parseInt($('#projectRow').val()),
     goal: parseInt($('#projectGoal').val()),
@@ -364,15 +377,19 @@ function storeProjectSettings() {
 }
 
 function runProject() {
-  var projectID = parseInt($('#projectID').val());
-  if (!userData.projects.hasOwnProperty(projectID)) return false;
-  var project = userData.projects[projectID];
+  const projectID = parseInt($('#projectID').val());
+  if (!(projectID in userData.projects)) {
+    return false;
+  }
+  const project = userData.projects[projectID];
   $('#projectHeader').text(project.name);
   $('#rowCount').val(project.row);
   placeFreqPips(project.freq, parseInt(project.row) - parseInt(project.freqStart));
   $('#goalNum').text(project.goal);
-  var percent = 0;
-  if (project.goal > 0) percent = Math.floor((project.row / project.goal) * 100);
+  let percent = 0;
+  if (project.goal > 0) {
+    percent = Math.floor((project.row / project.goal) * 100);
+  }
   $('#goalPercent').text(percent);
   setColors(percent);
   startListening(projectID);
@@ -380,20 +397,20 @@ function runProject() {
   $('#project-run').show();
 }
 
-var keyIsDown = true;
+let keyIsDown = true;
 function startListening(projectID) {
   $('#addRow').on('click', function () {
     increment(projectID);
   });
   $(document).on('keydown', function (e) {
     e.preventDefault();
-    if (e.keyCode == userData.settings.key && !keyIsDown) {
+    if (e.keyCode === userData.settings.key && !keyIsDown) {
       keyIsDown = true;
       increment(projectID);
     }
   });
   $(document).on('keyup', function (e) {
-    if (e.keyCode == userData.settings.key) {
+    if (e.keyCode === userData.settings.key) {
       keyIsDown = false;
     }
   });
@@ -407,8 +424,10 @@ function stopListening() {
 }
 
 function increment(projectID) {
-  if (!userData.projects.hasOwnProperty(projectID)) return false;
-  var project = userData.projects[projectID];
+  if (!(projectID in userData.projects)) {
+    return false;
+  }
+  const project = userData.projects[projectID];
   project.row += 1;
   project.prevRowTime = new Date().getTime();
   userData.projects[projectID] = project;
@@ -416,8 +435,10 @@ function increment(projectID) {
   $('#rowCount').val(project.row);
   $('#lastRow').data('value', project.prevRowTime).text(formatTimestamp(project.prevRowTime));
   placeFreqPips(project.freq, parseInt(project.row) - parseInt(project.freqStart));
-  var percent = 0;
-  if (project.goal > 0) percent = Math.floor((project.row / project.goal) * 100);
+  let percent = 0;
+  if (project.goal > 0) {
+    percent = Math.floor((project.row / project.goal) * 100);
+  }
   $('#goalPercent').text(percent);
   setColors(percent);
 }
@@ -425,13 +446,15 @@ function increment(projectID) {
 function placeFreqPips(freq, count) {
   freq = parseInt(freq);
   count = parseInt(count);
-  if (typeof freq == 'undefined' || !freq || freq <= 1) return;
-  var currentPip = count % freq;
-  var completeLoops = Math.floor(count / freq);
-  var $element;
+  if (typeof freq == 'undefined' || !freq || freq <= 1) {
+    return;
+  }
+  const currentPip = count % freq;
+  const completeLoops = Math.floor(count / freq);
+  let $element;
   $('#freqPips').html('');
-  $('#freqPips').append($('<b></b>').text(completeLoops + 'x +'));
-  for (i = 0; i < freq; i++) {
+  $('#freqPips').append($('<b></b>').text(`${completeLoops}x +`));
+  for (let i = 0; i < freq; i++) {
     $element = $('<span></span>');
     if (i <= currentPip) {
       $element.addClass('color-pip-done');
@@ -465,7 +488,7 @@ function setColors(percent) {
     $('#rowCount').addClass('percent80');
   } else if (percent < 100) {
     $('#rowCount').addClass('percent90');
-  } else if (percent == 100) {
+  } else if (percent === 100) {
     $('#rowCount').addClass('percent100');
   } else {
     $('#rowCount').addClass('percentOver');

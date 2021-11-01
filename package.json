@@ -1,0 +1,27 @@
+{
+  "name": "knitting-row-counter",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npm run lint:format && npm run lint:eslint",
+    "lint:format": "npx prettier -c .",
+    "lint:eslint": "npx eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackmstafford/knitting-row-counter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jackmstafford/knitting-row-counter/issues"
+  },
+  "homepage": "https://github.com/jackmstafford/knitting-row-counter#readme",
+  "devDependencies": {
+    "eslint": "^8.1.0",
+    "eslint-config-jquery": "^3.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "prettier": "^2.4.1"
+  }
+}
