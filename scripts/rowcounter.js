@@ -194,6 +194,7 @@ $(document).ready(function () {
     if ($(this).hasClass('openProject')) {
       $('#cancelChanges').hide();
       openProject(projectID);
+      runProject();
     } else if ($(this).hasClass('deleteProject')) {
       deleteProject(projectID);
     }
