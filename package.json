@@ -4,9 +4,10 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "npm run lint:format && npm run lint:eslint",
+    "lint": "npm run lint:format && npm run lint:eslint && npm run lint:typecheck",
     "lint:format": "npx prettier -c .",
-    "lint:eslint": "npx eslint ."
+    "lint:eslint": "npx eslint .",
+    "lint:typecheck": "npx tsc -p ."
   },
   "repository": {
     "type": "git",
@@ -19,9 +20,13 @@
   },
   "homepage": "https://github.com/jackmstafford/knitting-row-counter#readme",
   "devDependencies": {
+    "@types/jquery": "^3.5.8",
     "eslint": "^8.1.0",
     "eslint-config-jquery": "^3.0.0",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.4.1"
+  },
+  "dependencies": {
+    "typescript": "^4.4.4"
   }
 }

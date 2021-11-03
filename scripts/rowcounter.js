@@ -1,3 +1,32 @@
+import cookie from './jquery-cookie.js';
+
+/**
+ * @typedef {{
+ *   name: string;
+ *   row: number;
+ *   goal: number;
+ *   freq: number;
+ *   freqStart: number;
+ *   prevRowTime: number;
+ * }} ProjectSettings
+ *
+ * @typedef {'dark' | 'light'} Theme
+ *
+ * @typedef {{
+ *  profile: {
+ *    id: string;
+ *    currentProject: boolean;
+ *  },
+ *  settings: {
+ *    theme: Theme;
+ *    key: typeof keyMap[keyof keyMap]
+ *  },
+ *  projects: {
+ *    [key: string]: ProjectSettings;
+ *  }
+ * }} UserData;
+ */
+
 const keyMap = {
   backspace: 8,
   tab: 9,
@@ -100,8 +129,14 @@ const keyMap = {
   apostrophe: 222,
 };
 
+/**
+ * @type {keyof keyMap}
+ */
 const defaultKeyCode = 'space';
 
+/**
+ * @type {Readonly<UserData>}
+ */
 const userDataTemplate = {
   profile: {
     id: '',
@@ -123,6 +158,9 @@ const newProjectTemplate = {
   prevRowTime: 0,
 };
 
+/**
+ * @type UserData
+ */
 let userData;
 
 $(document).ready(function () {
@@ -135,6 +173,10 @@ $(document).ready(function () {
   $('.tabs li a').click(function (e) {
     e.preventDefault();
     const id = $(this).attr('id');
+    if (id == null) {
+      console.error('id null');
+      return;
+    }
     const idParts = id.split('-');
     const tab = `#tab-${idParts[1]}`;
     $('.tab').hide();
@@ -168,30 +210,45 @@ $(document).ready(function () {
     runProject();
   });
   $('#changeProjectSettings').click(function () {
-    const projectID = parseInt($('#projectID').val());
-    openProject(projectID);
+    const projectIDString = /** @type string */ ($('#projectID').val());
+    openProject(projectIDString);
   });
   $('#switchProject, #switchProject2').click(function () {
     showProjectsPage();
   });
 });
 
+/**
+ * @returns {void}
+ */
 function initializeUserData() {
-  $.cookie.json = true;
-  userData = $.cookie('knitting-data');
-  if (typeof userData == 'undefined') {
+  /** @type UserData */
+  userData = cookie.read('knitting-data');
+  if (userData == null) {
     userData = userDataTemplate;
     doUpgrade();
     saveUserData();
   }
 }
 
+/**
+ * @returns {void}
+ */
 function saveUserData() {
-  $.cookie('knitting-data', userData, { expires: 30 });
+  cookie.write('knitting-data', userData, { expires: 30 });
 }
 
 function doUpgrade() {
-  const settings = $.cookie('knitting-settings');
+  /**
+   * @type {{
+   *  count: number;
+   *  goal: number;
+   *  repeatFreq: number;
+   *  lastRow: number;
+   *  key: typeof keyMap[keyof keyMap];
+   * }}
+   */
+  const settings = cookie.read('knitting-settings');
   if (typeof settings != 'undefined' && settings) {
     const time = new Date().getTime();
     userData.projects[time] = {
@@ -209,10 +266,11 @@ function doUpgrade() {
 function setTheme() {
   const theme = userData.settings.theme;
   if (typeof theme != 'undefined' && theme === 'light') {
-    $('#themeswitch').attr('checked', false);
+    $('#themeswitch').removeAttr('checked');
     $('#theme').attr('href', 'styles/theme-light.css');
   }
   $('#themeswitch').change(function () {
+    /** @type Theme */
     let theme;
     if ($(this).is(':checked')) {
       theme = 'dark';
@@ -248,7 +306,7 @@ function showProjectsPage() {
   $('#projects').html('');
   let i = 0;
   for (const projectID in userData.projects) {
-    if (!(projectID in userData.projects)) {
+    if (projectID in userData.projects) {
       const project = userData.projects[projectID];
       const projectEntry = $('<tr></tr>').data('project', projectID);
       if (i % 2 === 1) {
@@ -277,7 +335,10 @@ function showProjectsPage() {
   $('#initial').show();
   console.log(userData);
 }
-
+/**
+ * @param  {number | string} timestamp
+ * @param  {boolean} [dateOnly]
+ */
 function formatTimestamp(timestamp, dateOnly) {
   if (typeof timestamp == 'undefined' || timestamp === 0) {
     return 'never';
@@ -285,7 +346,7 @@ function formatTimestamp(timestamp, dateOnly) {
   if (typeof dateOnly == 'undefined') {
     dateOnly = false;
   }
-  if (typeof timestamp == 'string' || timestamp instanceof String) {
+  if (typeof timestamp == 'string') {
     timestamp = parseInt(timestamp);
   }
   const dateObj = new Date(timestamp);
@@ -305,7 +366,11 @@ function formatTimestamp(timestamp, dateOnly) {
     return `${d.hour}:${d.minute}:${d.second} ${d.month}/${d.day}/${d.year}`;
   }
 }
-
+/**
+ * @param  {number | string} n
+ * @param  {number} width
+ * @param  {string} [z]
+ */
 function pad(n, width, z) {
   z = z || '0';
   n = `${n}`;
@@ -313,13 +378,17 @@ function pad(n, width, z) {
 }
 
 function createProject() {
-  const projectID = new Date().getTime();
+  const projectID = `${new Date().getTime()}`;
   userData.projects[projectID] = newProjectTemplate;
   saveUserData();
   $('#cancelChanges').hide();
   openProject(projectID);
 }
 
+/**
+ * @param  {string} projectID
+ * @returns {false | void}
+ */
 function openProject(projectID) {
   stopListening();
   if (!(projectID in userData.projects)) {
@@ -343,6 +412,10 @@ function openProject(projectID) {
   $('#project-settings').show();
 }
 
+/**
+ * @param  {string} projectID
+ * @returns {false | void}
+ */
 function deleteProject(projectID) {
   if (!(projectID in userData.projects)) {
     return false;
@@ -355,7 +428,6 @@ function deleteProject(projectID) {
   $('#projects tr').each(function () {
     if ($(this).data('project') === projectID) {
       $(this).remove();
-      return false;
     }
   });
   delete userData.projects[projectID];
@@ -363,28 +435,31 @@ function deleteProject(projectID) {
 }
 
 function storeProjectSettings() {
-  const projectID = parseInt($('#projectID').val());
+  const projectID = /** @type string */ ($('#projectID').val());
+  /** @type ProjectSettings */
   const projectSettings = {
-    name: $('#projectName').val(),
-    row: parseInt($('#projectRow').val()),
-    goal: parseInt($('#projectGoal').val()),
-    freq: parseInt($('#projectFreq').val()),
-    freqStart: parseInt($('#projectFreqStart').val()),
+    name: /** @type string */ ($('#projectName').val()),
+    row: parseInt(/** @type string */ ($('#projectRow').val())),
+    goal: parseInt(/** @type string */ ($('#projectGoal').val())),
+    freq: parseInt(/** @type string */ ($('#projectFreq').val())),
+    freqStart: parseInt(/** @type string */ ($('#projectFreqStart').val())),
     prevRowTime: $('#lastRow').data('value'),
   };
   userData.projects[projectID] = projectSettings;
   saveUserData();
 }
-
+/**
+ * @returns {false | void}
+ */
 function runProject() {
-  const projectID = parseInt($('#projectID').val());
+  const projectID = /** @type string */ ($('#projectID').val());
   if (!(projectID in userData.projects)) {
     return false;
   }
   const project = userData.projects[projectID];
   $('#projectHeader').text(project.name);
   $('#rowCount').val(project.row);
-  placeFreqPips(project.freq, parseInt(project.row) - parseInt(project.freqStart));
+  placeFreqPips(project.freq, project.row - project.freqStart);
   $('#goalNum').text(project.goal);
   let percent = 0;
   if (project.goal > 0) {
@@ -398,6 +473,11 @@ function runProject() {
 }
 
 let keyIsDown = true;
+
+/**
+ * @param  {string} projectID
+ * @returns {void}
+ */
 function startListening(projectID) {
   $('#addRow').on('click', function () {
     increment(projectID);
@@ -416,6 +496,9 @@ function startListening(projectID) {
   });
 }
 
+/**
+ * @returns {void}
+ */
 function stopListening() {
   $('#addRow').off('click');
   $(document).off('keydown');
@@ -423,6 +506,10 @@ function stopListening() {
   keyIsDown = false;
 }
 
+/**
+ * @param  {string} projectID
+ * @returns {false | void}
+ */
 function increment(projectID) {
   if (!(projectID in userData.projects)) {
     return false;
@@ -434,7 +521,7 @@ function increment(projectID) {
   saveUserData();
   $('#rowCount').val(project.row);
   $('#lastRow').data('value', project.prevRowTime).text(formatTimestamp(project.prevRowTime));
-  placeFreqPips(project.freq, parseInt(project.row) - parseInt(project.freqStart));
+  placeFreqPips(project.freq, project.row - project.freqStart);
   let percent = 0;
   if (project.goal > 0) {
     percent = Math.floor((project.row / project.goal) * 100);
@@ -443,9 +530,11 @@ function increment(projectID) {
   setColors(percent);
 }
 
+/**
+ * @param  {number} freq
+ * @param  {number} count
+ */
 function placeFreqPips(freq, count) {
-  freq = parseInt(freq);
-  count = parseInt(count);
   if (typeof freq == 'undefined' || !freq || freq <= 1) {
     return;
   }
@@ -464,7 +553,10 @@ function placeFreqPips(freq, count) {
     $('#freqPips').append($element);
   }
 }
-
+/**
+ * @param  {number} percent
+ * @returns {void}
+ */
 function setColors(percent) {
   $('#rowCount').removeClass('percent0  percent10 percent20 percent30 percent40  percent50');
   $('#rowCount').removeClass('percent60 percent70 percent80 percent90 percent100 percentOver');
