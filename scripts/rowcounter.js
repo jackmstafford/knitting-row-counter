@@ -533,13 +533,13 @@ function increment(projectID) {
  * @param  {number} count
  */
 function placeFreqPips(freq, count) {
+  $('#freqPips').html('');
   if (typeof freq == 'undefined' || !freq || freq <= 1) {
     return;
   }
   const currentPip = count % freq;
   const completeLoops = Math.floor(count / freq);
   let $element;
-  $('#freqPips').html('');
   $('#freqPips').append($('<b></b>').text(`${completeLoops}x +`));
   for (let i = 0; i < freq; i++) {
     $element = $('<span></span>');
