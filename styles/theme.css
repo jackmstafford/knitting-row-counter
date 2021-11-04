@@ -1,0 +1,144 @@
+:root {
+  --o-1: calc(var(--main) var(--op) 16 * 1);
+  --offset-1: rgb(var(--o-1), var(--o-1), var(--o-1));
+  --o-2: calc(var(--main) var(--op) 16 * 2);
+  --offset-2: rgb(var(--o-2), var(--o-2), var(--o-2));
+  --o-3: calc(var(--main) var(--op) 16 * 3);
+  --offset-3: rgb(var(--o-3), var(--o-3), var(--o-3));
+  --o-5: calc(var(--main) var(--op) 16 * 8);
+  --offset-5: rgb(var(--o-3), var(--o-3), var(--o-3));
+  --o-265: calc(var(--main) var(--op) 265);
+  --contrast-color: rgb(var(--o-265), var(--o-265), var(--o-265));
+  --base-color: rgb(var(--base), var(--base), var(--base));
+  --o-base-1: calc(var(--base) + 25);
+  --base-offset-1: rgb(var(--o-base-1), var(--o-base-1), var(--o-base-1));
+  --o-base-2: calc(var(--base) + 35);
+  --base-offset-2: rgb(var(--o-base-2), var(--o-base-2), var(--o-base-2));
+  --radius: 1ex;
+  --default-border-color: #ccc;
+  --red: #f00;
+  --green: #0f0;
+}
+
+body {
+  background-color: var(--main-color);
+  color: var(--main-text-color);
+}
+
+a {
+  color: var(--link-text-color);
+}
+a:hover {
+  color: var(--hover-color);
+}
+
+input[type='button'] {
+  background: linear-gradient(
+    180deg,
+    var(--base-offset-1) 0%,
+    var(--base-color) 50%,
+    var(--base-offset-1) 100%
+  );
+}
+
+select,
+input {
+  background: var(--offset-1);
+  color: var(--main-text-color);
+  border-width: 0.3ex;
+  border-color: var(--offset-5);
+  margin: 1ex;
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.tabs li a {
+  color: var(--link-text-color);
+  background-color: var(--link-contrast-color);
+  text-decoration: none;
+  padding: 5px;
+  border-color: var(--default-border-color);
+}
+.tabs li a.active {
+  background-color: var(--main-color);
+  border-bottom-color: var(--main-color);
+}
+
+::-webkit-scrollbar {
+  background-color: var(--scrollbar-background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-color);
+  border: 0.5ex solid var(--scrollbar-background-color);
+  border-radius: 1ex;
+}
+
+#projectsWrap {
+  background-color: var(--offset-1);
+}
+
+table#projects {
+  color: var(--link-text-color);
+}
+
+table#projects tr td {
+  border-color: var(--default-border-color);
+}
+
+table#projects tr:nth-child(odd) {
+  background-color: var(--offset-2);
+}
+
+table#projects a:hover {
+  color: var(--main-text-color);
+}
+
+#projectAdv {
+  display: inline-block;
+  border: 0.1ex solid var(--default-border-color);
+  color: var(--main-text-color);
+}
+#projectAdvSettingsGrabber {
+  background-color: var(--base-offset-1);
+}
+#projectAdvSettings {
+  background-color: var(--base-offset-2);
+}
+
+#rowCount {
+  background-color: var(--main-color);
+  margin: 0;
+}
+
+.color-pip {
+  background-color: var(--red);
+}
+.color-pip-done {
+  background-color: var(--green);
+}
+
+.percent0,
+.percent10,
+.percent20,
+.percent30,
+.percent40 {
+  color: var(--contrast-color);
+}
+.percent50,
+.percent60 {
+  color: #f60;
+}
+.percent70,
+.percent80 {
+  color: #fa0;
+}
+.percent90 {
+  color: #ff0;
+}
+.percent100 {
+  color: var(--green);
+}
+.percentOver {
+  color: var(--red);
+}

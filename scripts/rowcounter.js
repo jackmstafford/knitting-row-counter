@@ -310,9 +310,6 @@ function showProjectsPage() {
     if (projectID in userData.projects) {
       const project = userData.projects[projectID];
       const projectEntry = $('<tr></tr>').data('project', projectID);
-      if (i % 2 === 1) {
-        projectEntry.addClass('odd');
-      }
       let percent = '';
       if (project.goal > 0) {
         percent = `${Math.floor((project.row / project.goal) * 100)}%`;

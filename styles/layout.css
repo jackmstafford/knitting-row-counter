@@ -22,12 +22,12 @@ input[type='button'] {
 }
 input[type='button'].primary {
   display: inline-block;
-  width: 100%;
+  width: 95%;
   padding: 20px 5px;
 }
 input[type='button'].secondary {
   display: inline-block;
-  width: 50%;
+  width: 46.5%;
 }
 #header {
   margin: 10px auto 20px auto;
@@ -131,13 +131,10 @@ label {
 }
 
 #projectAdvSettingsGrabber {
-  margin-top: 10px;
-  border: 1px solid #ccc;
   cursor: pointer;
   padding: 5px;
 }
 #projectAdvSettings {
-  border: 1px solid #ccc;
   padding: 5px;
 }
 

@@ -1,87 +1,12 @@
-body {
-  background-color: #000;
-  color: #fff;
-}
-
-a {
-  color: #ccc;
-}
-a:hover {
-  color: #eee;
-}
-
-.tabs li a {
-  color: #ccc;
-  background-color: #666;
-  text-decoration: none;
-  padding: 5px;
-  border-color: #ccc;
-}
-.tabs li a.active {
-  background-color: #000;
-}
-
-#projectsWrap {
-  background-color: #fff;
-}
-
-table#projects {
-  color: #444;
-}
-table#projects tr td {
-  border-color: #ccc;
-}
-table#projects tr.odd {
-  background-color: #eee;
-}
-table#projects a {
-  color: #444;
-}
-table#projects a:hover {
-  color: #666;
-}
-#projectAdvSettingsGrabber {
-  border-color: #ccc;
-  background-color: #ddd;
-  color: #444;
-}
-#projectAdvSettings {
-  border-color: #ccc;
-  background-color: #eee;
-  color: #444;
-}
-
-#rowCount {
-  background-color: #000;
-}
-.color-pip {
-  background-color: #f00;
-}
-.color-pip-done {
-  background-color: #0f0;
-}
-
-.percent0,
-.percent10,
-.percent20,
-.percent30,
-.percent40 {
-  color: #fff;
-}
-.percent50,
-.percent60 {
-  color: #f60;
-}
-.percent70,
-.percent80 {
-  color: #fa0;
-}
-.percent90 {
-  color: #ff0;
-}
-.percent100 {
-  color: #0f0;
-}
-.percentOver {
-  color: #f00;
+:root {
+  --main: 0;
+  --op: +;
+  --main-color: #000;
+  --main-text-color: #fff;
+  --link-text-color: #ccc;
+  --link-contrast-color: #666;
+  --hover-color: #eee;
+  --scrollbar-color: #111;
+  --scrollbar-background-color: #444;
+  --base: 0;
 }
