@@ -153,7 +153,7 @@ label {
 
 #forkongithub a {
   display: block;
-  background: #f82;
+  background: rgb(6, 83, 21);
   color: #fff;
   text-decoration: none;
   font-family: arial, sans-serif;
@@ -164,10 +164,6 @@ label {
   line-height: 1.6rem;
   position: relative;
   transition: 0.5s;
-}
-#forkongithub a:hover {
-  background: #f50;
-  color: #fff;
 }
 #forkongithub a::before,
 #forkongithub a::after {
