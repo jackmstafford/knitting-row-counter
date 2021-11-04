@@ -305,7 +305,6 @@ function setKey() {
 function showProjectsPage() {
   stopListening();
   $('#projects').html('');
-  let i = 0;
   for (const projectID in userData.projects) {
     if (projectID in userData.projects) {
       const project = userData.projects[projectID];
@@ -326,7 +325,6 @@ function showProjectsPage() {
         .append(projectStart)
         .append(projectDelete);
       $('#projects').append(projectEntry);
-      i++;
     }
   }
   $('#project-settings, #project-run').hide();
