@@ -54,12 +54,13 @@ function parseCookieValue(s) {
 /**
  * @template T
  * @param {string} key
- * @returns {T}
+ * @returns {T | undefined}
  */
 function read(key) {
   // Read
 
-  let result = /** @type {T} */ ({});
+  /** @type {T | undefined} */
+  let result = undefined;
 
   // To prevent the for loop in the first place assign an empty array
   // in case there are no cookies at all. Also prevents odd result when
@@ -80,6 +81,9 @@ function read(key) {
     if (!key) {
       const readCookie = parseCookieValue(cookie);
       if (readCookie != null) {
+        if (result == null) {
+          result = /** @type T */ ({});
+        }
         result[/** @type {keyof T} */ (name)] = readCookie;
       }
     }
