@@ -19,120 +19,13 @@ import cookie from './jquery-cookie.js';
  *  },
  *  settings: {
  *    theme: Theme;
- *    key: typeof keyMap[keyof keyMap]
+ *    key: string;
  *  },
  *  projects: {
  *    [key: string]: ProjectSettings;
  *  }
  * }} UserData;
  */
-
-const keyMap = {
-  backspace: 8,
-  tab: 9,
-  enter: 13,
-  shift: 16,
-  ctrl: 17,
-  alt: 18,
-  pause: 19,
-  capslock: 20,
-  escape: 27,
-  space: 32,
-  pageup: 33,
-  pagedown: 34,
-  end: 35,
-  home: 36,
-  left: 37,
-  up: 38,
-  right: 39,
-  down: 40,
-  insert: 45,
-  delete: 46,
-  0: 48,
-  1: 49,
-  2: 50,
-  3: 51,
-  4: 52,
-  5: 53,
-  6: 54,
-  7: 55,
-  8: 56,
-  9: 57,
-  a: 65,
-  b: 66,
-  c: 67,
-  d: 68,
-  e: 69,
-  f: 70,
-  g: 71,
-  h: 72,
-  i: 73,
-  j: 74,
-  k: 75,
-  l: 76,
-  m: 77,
-  n: 78,
-  o: 79,
-  p: 80,
-  q: 81,
-  r: 82,
-  s: 83,
-  t: 84,
-  u: 85,
-  v: 86,
-  w: 87,
-  x: 88,
-  y: 89,
-  z: 90,
-  leftwin: 91,
-  rightwin: 92,
-  select: 93,
-  num0: 96,
-  num1: 97,
-  num2: 98,
-  num3: 99,
-  num4: 100,
-  num5: 101,
-  num6: 102,
-  num7: 103,
-  num8: 104,
-  num9: 105,
-  multiply: 106,
-  add: 107,
-  subtract: 109,
-  decimal: 110,
-  divide: 111,
-  f1: 112,
-  f2: 113,
-  f3: 114,
-  f4: 115,
-  f5: 116,
-  f6: 117,
-  f7: 118,
-  f8: 119,
-  f9: 120,
-  f10: 121,
-  f11: 122,
-  f12: 123,
-  numlk: 144,
-  scrolllk: 145,
-  semicolon: 186,
-  equals: 187,
-  comma: 188,
-  dash: 189,
-  period: 190,
-  slash: 191,
-  backtick: 192,
-  lbracket: 219,
-  backslash: 220,
-  rbracket: 221,
-  apostrophe: 222,
-};
-
-/**
- * @type {keyof keyMap}
- */
-const defaultKeyCode = 'space';
 
 /**
  * @type {Readonly<UserData>}
@@ -144,7 +37,7 @@ const userDataTemplate = {
   },
   settings: {
     theme: 'dark',
-    key: keyMap[defaultKeyCode],
+    key: ' ',
   },
   projects: {},
 };
@@ -227,7 +120,6 @@ function initializeUserData() {
   userData = cookie.read('knitting-data');
   if (userData == null) {
     userData = userDataTemplate;
-    doUpgrade();
     saveUserData();
   }
 }
@@ -237,31 +129,6 @@ function initializeUserData() {
  */
 function saveUserData() {
   cookie.write('knitting-data', userData, { expires: 30 });
-}
-
-function doUpgrade() {
-  /**
-   * @type {{
-   *  count: number;
-   *  goal: number;
-   *  repeatFreq: number;
-   *  lastRow: number;
-   *  key: typeof keyMap[keyof keyMap];
-   * }}
-   */
-  const settings = cookie.read('knitting-settings');
-  if (typeof settings != 'undefined' && settings) {
-    const time = new Date().getTime();
-    userData.projects[time] = {
-      name: 'Current Project',
-      row: settings.count,
-      goal: settings.goal,
-      freq: settings.repeatFreq,
-      freqStart: 0,
-      prevRowTime: settings.lastRow,
-    };
-    userData.settings.key = settings.key;
-  }
 }
 
 function setTheme() {
@@ -287,18 +154,36 @@ function setTheme() {
 }
 
 function setKey() {
-  const key = userData.settings.key;
-  $('#keyCode').html('');
-  $.each(keyMap, function (name, code) {
-    const $element = $('<option></option>').attr('value', code).text(name);
-    if (code === key) {
-      $element.attr('selected', 1);
-    }
-    $('#keyCode').append($element);
-  });
-  $('#keyCode').on('change', function () {
-    userData.settings.key = Number($(this).val());
+  const $body = $('body');
+  const $modal = $('#modal');
+  const $currentKey = $('#currentKey');
+  $currentKey.html(`"${userData.settings.key}"`);
+  const $newKey = $('#newKey');
+  /** @type string */
+  let newKey;
+  const openModal = () => {
+    $newKey.html(`"${userData.settings.key}"`);
+    $body.on('keydown', listener);
+    $modal.css({ display: 'block' });
+  };
+  $('#changeKey').on('click', openModal);
+  /**
+   * @type {(e: JQuery.KeyDownEvent) => void}
+   */
+  const listener = (e) => {
+    newKey = e.key;
+    $newKey.html(`"${newKey}"`);
+  };
+  const closeModal = () => {
+    $modal.css({ display: 'none' });
+    $body.off('keydown', listener);
+  };
+  $('#closeModal, #cancelModal').on('click', closeModal);
+  $('#acceptModal').on('click', () => {
+    userData.settings.key = newKey;
     saveUserData();
+    $currentKey.html(`"${newKey}"`);
+    closeModal();
   });
 }
 
@@ -329,7 +214,6 @@ function showProjectsPage() {
   }
   $('#project-settings, #project-run').hide();
   $('#initial').show();
-  console.log(userData);
 }
 /**
  * @param  {number | string} timestamp
@@ -480,13 +364,13 @@ function startListening(projectID) {
   });
   $(document).on('keydown', function (e) {
     e.preventDefault();
-    if (e.keyCode === userData.settings.key && !keyIsDown) {
+    if (e.key === userData.settings.key && !keyIsDown) {
       keyIsDown = true;
       increment(projectID);
     }
   });
   $(document).on('keyup', function (e) {
-    if (e.keyCode === userData.settings.key) {
+    if (e.key === userData.settings.key) {
       keyIsDown = false;
     }
   });

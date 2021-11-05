@@ -35,8 +35,6 @@
       <a href="https://github.com/jackmstafford/knitting-row-counter">Fork me on GitHub</a>
     </div>
     <div class="wrap" id="header">
-      <!-- Go to www.addthis.com/dashboard to customize your tools -->
-      <div class="addthis_sharing_toolbox"></div>
       <h1>Knitting Row Counter</h1>
       <a href="pedals.html">See Compatible Foot Pedals &raquo;</a>
     </div>
@@ -134,47 +132,18 @@
             <span class="themeswitch-switch"></span>
           </label>
         </div>
-        <label for="keyCode">Add Row on Keypress: </label>
-        <select name="keyCode" id="keyCode"></select>
+        <label for="keyCode">Add Row on Keypress: <span id="currentKey" /></label>
+        <input type="button" id="changeKey" value="change" />
       </div>
     </div>
-    <div class="wrap" id="ad-block">
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-      <!-- knitting-row-counter -->
-      <ins
-        class="adsbygoogle"
-        style="display: inline-block; width: 336px; height: 280px"
-        data-ad-client="ca-pub-7854209247901003"
-        data-ad-slot="4778040852"
-      ></ins>
-      <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
-      <script>
-        (function (i, s, o, g, r, a, m) {
-          i['GoogleAnalyticsObject'] = r;
-          (i[r] =
-            i[r] ||
-            function () {
-              (i[r].q = i[r].q || []).push(arguments);
-            }),
-            (i[r].l = 1 * new Date());
-          (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
-          a.async = 1;
-          a.src = g;
-          m.parentNode.insertBefore(a, m);
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-        ga('create', 'UA-38751106-1', 'auto');
-        ga('require', 'displayfeatures');
-        ga('send', 'pageview');
-      </script>
-      <!-- Go to www.addthis.com/dashboard to customize your tools -->
-      <script
-        type="text/javascript"
-        src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-512a98654ff68c94"
-        async
-      ></script>
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span id="closeModal" class="close">&times;</span>
+        <p>press key for use as row increment button</p>
+        <p>current key: <span id="newKey" /></p>
+        <input type="button" id="acceptModal" value="accept" />
+        <input type="button" id="cancelModal" value="cancel" />
+      </div>
     </div>
   </body>
 </html>

@@ -11,6 +11,7 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
+    'no-console': ['error', { allow: ['error'] }],
     'no-var': 'error',
     'prefer-const': 'error',
     'prefer-template': 'error',

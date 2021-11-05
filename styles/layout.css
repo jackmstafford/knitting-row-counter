@@ -189,7 +189,6 @@ label {
     width: 200px;
     overflow: hidden;
     height: 200px;
-    z-index: 9999;
   }
   #forkongithub a {
     display: inline;
@@ -284,4 +283,43 @@ label {
 }
 .themeswitch-checkbox:checked + .themeswitch-label .themeswitch-switch {
   right: 0px;
+}
+
+#modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.75); /* Black w/ opacity */
+}
+
+.modal-content {
+  background-color: var(--offset-1);
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 25em;
+}
+
+.close {
+  color: var(--link-text-color);
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: -0.5ex;
+}
+
+.close:hover,
+.close:focus {
+  color: var(--main-text-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+input[type='button'] {
+  cursor: pointer;
 }
